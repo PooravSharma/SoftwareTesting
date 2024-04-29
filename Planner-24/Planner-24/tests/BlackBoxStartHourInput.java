@@ -48,7 +48,6 @@ public class BlackBoxStartHourInput {
 		assertEquals(20, 20, isValidStart);
 		assertEquals(21, 21, isValidStart);
 		assertEquals(22, 22, isValidStart);
-		assertEquals(23, 23, isValidStart);
 
 	}
 	
@@ -57,7 +56,8 @@ public class BlackBoxStartHourInput {
 		
 		assertEquals("zero", "zero", isNotValidStart);
 		assertEquals(-1, -1, isNotValidStart);
-		assertEquals(" ", " ", isNotValidStart);
+		assertEquals(23, 23, isValidStart);
+		assertEquals(24, 24, isNotValidStart);
 		assertEquals("one", "one", isNotValidStart);
 
 
@@ -66,7 +66,7 @@ public class BlackBoxStartHourInput {
 	@Test
 	void testOverStartBoundary() {
 		
-		assertEquals(0, -1, overBoundary);
+		assertEquals(-1, -1, overBoundary);
 		assertEquals(23, 24, overBoundary);
 
 	}

@@ -63,7 +63,8 @@ public class BlackBoxDayInput {
 
 	@Test	
 	void testInvalidDay() {
-		
+
+		assertEquals( -1, -1, isNotValid);
 		assertEquals("1", "0", isNotValid);
 		assertEquals( 1, 0, isNotValid);
 		assertEquals( 29, 30, isNotValid);
