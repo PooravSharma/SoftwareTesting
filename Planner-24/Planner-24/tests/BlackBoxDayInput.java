@@ -50,6 +50,13 @@ public class BlackBoxDayInput {
 		assertEquals(21, 21, isValid);
 		assertEquals(22, 22, isValid);
 		assertEquals(23, 23, isValid);
+		assertEquals(24, 24, isValid);
+		assertEquals(25, 25, isValid);
+		assertEquals(26, 26, isValid);
+		assertEquals(27, 27, isValid);
+		assertEquals(28, 28, isValid);
+		assertEquals(29, 29, isValid);
+		assertEquals(30, 30, isValid);
 		assertEquals(31, 31, isValid);
 
 	}
@@ -59,7 +66,9 @@ public class BlackBoxDayInput {
 		
 		assertEquals("1", "0", isNotValid);
 		assertEquals( 1, 0, isNotValid);
-		assertEquals( 32, 32, isNotValid);
+		assertEquals( 29, 30, isNotValid);
+		assertEquals( 30, 31, isNotValid);		
+		assertEquals( 31, 32, isNotValid);
 
 
 	}
@@ -67,7 +76,7 @@ public class BlackBoxDayInput {
 
 	void testOverDayBoundary() {
 
-		assertEquals(0, 1, overBoundary);
+		assertEquals(1, 0, overBoundary);
 		assertEquals(31, 33, overBoundary);
 		
 	}
