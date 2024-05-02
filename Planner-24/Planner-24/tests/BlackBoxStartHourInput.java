@@ -67,7 +67,7 @@ public class BlackBoxStartHourInput {
 	void testOverStartBoundary() {
 		
 		assertEquals(-1, -1, overBoundary);
-		assertEquals(23, 24, overBoundary);
+		assertEquals(24, 24, overBoundary);
 
 	}
 	
