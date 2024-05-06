@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
  */
 public class BlackBoxStartHourInput {
 
-	String isValidStart = "This is a valid start time!"; // if the 
+	String isValidStart = "This is a valid start time!"; 
 	
     String isNotValidStart = "This is not a valid start time";
 	
