@@ -18,50 +18,38 @@ public class BlackBoxOrganization {
 	Organization planner = Mockito.spy(Organization.class);
 
 
-	private ArrayList<Person> employees;
-	private ArrayList<Room> rooms;
+	String[] expectedPersonOutput = new String[] {
+			"Justin Gardener",
+	        "Ashley Matthews",
+	        "Mary Jane Cook",
+	        "Rose Austin",
+	        "Mike Smith",
+	        "Helen West",
+	        "Steven Lewis",
+	        "Edith Cowan",
+	        "Mark Colin",
+	        "Jacquie Martin",
+	        "Jaci Johnston",
+	        "Travis Colin",
+	        "Ashley Martin",
+			
+	};
 	
-	 void Organization(){
-		employees = new ArrayList<Person>();
-		employees.add(new Person("Justin Gardener"));
-		employees.add(new Person("Ashley Matthews"));
-		employees.add(new Person("Mary Jane Cook"));
-		employees.add(new Person("Rose Austin"));
-		employees.add(new Person("Mike Smith"));
-		employees.add(new Person("Helen West"));
-		employees.add(new Person("Steven Lewis"));
-		employees.add(new Person("Edith Cowan"));
-		employees.add(new Person("Mark Colin"));
-		employees.add(new Person("Jacquie Martin"));
-		employees.add(new Person("Jaci Johnston"));
-		employees.add(new Person("Travis Colin"));
-		employees.add(new Person("Ashley Martin"));
-		
-
-
-		rooms = new ArrayList<Room>();
-		rooms.add(new Room("JO18.330"));
-		rooms.add(new Room("JO7.221"));
-		rooms.add(new Room("JO15.236"));
-		rooms.add(new Room("JO1.230"));
-		rooms.add(new Room("JO34.536"));
-		rooms.add(new Room("JO19.230"));
-		rooms.add(new Room("ML5.123"));
-		rooms.add(new Room("ML18.330"));
-		rooms.add(new Room("ML21.520"));
-		rooms.add(new Room("ML13.213"));
-		rooms.add(new Room("ML21.310"));
-		rooms.add(new Room("ML13.218"));
-	}
-	
-	public ArrayList<Person> getEmployees() {
-		return employees;
-	}
-
-	public ArrayList<Room> getRooms() {
-		return rooms;
-	}
-	
+	String[] expectedRoomOutput = new String[] {
+			"JO18.330",
+			"JO7.221",
+			"JO15.236",
+			"JO1.230",
+			"JO34.536",
+			"JO19.230",
+			"ML5.123",
+			"ML18.330",
+			"ML21.520",
+			"ML13.213",
+			"ML21.310",
+			"ML13.218",
+			
+	};
 	
 	//We define variables which will be called depending on their respective variable names
 	String isRoom = "This ID matches an existing room"; 
@@ -75,21 +63,21 @@ public class BlackBoxOrganization {
 	
 	// we can capture
 	@Test
-	void testRoomTrue(String ID) {
-		assertEquals(Organization.getRoom(ID), isRoom);
+	void testRoomTrue(String ID) throws Exception {
+		assertEquals(expectedRoomOutput, isRoom);
 	}
 	
 	void testRoomNotTrue(String ID) {
-		assertEquals(Organization.getRoom(ID), isNotRoom);
+		assertEquals(expectedRoomOutput, isNotRoom);
 	}
 
 	//continuing this, each employee
 	void testEmployeeTrue(String name) {
-		assertEquals(Organization.getEmployee(employees), isEmployee);
+		assertEquals(expectedPersonOutput, isEmployee);
 	}
 	
 	void testEmployeeNotTrue(String name) {
-		assertEquals(Organization.getEmployee());
+		assertEquals(Organization.getEmployee(employees), isNotEmployee);
 	}
 	
 	
