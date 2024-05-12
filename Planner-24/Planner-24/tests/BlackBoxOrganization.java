@@ -77,7 +77,7 @@ public class BlackBoxOrganization {
 	}
 	
 	void testEmployeeNotTrue(String name) {
-		assertEquals(Organization.getEmployee(employees), isNotEmployee);
+		assertEquals(expectedPersonOutput, isNotEmployee);
 	}
 	
 	
