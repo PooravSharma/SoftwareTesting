@@ -14,7 +14,7 @@ import org.mockito.Mockito;
 
 public class BlackBoxOrganization {
 
-	//Create a spy of the Organization class to 
+	//Create a spy of the Organization class to initialise and store a mockup of data from the file
 	Organization planner = Mockito.spy(Organization.class);
 
 
@@ -67,16 +67,16 @@ public class BlackBoxOrganization {
 		assertEquals(expectedRoomOutput, isRoom);
 	}
 	
-	void testRoomNotTrue(String ID) {
+	void testRoomNotTrue(String ID) throws Exception {
 		assertEquals(expectedRoomOutput, isNotRoom);
 	}
 
 	//continuing this, each employee
-	void testEmployeeTrue(String name) {
+	void testEmployeeTrue(String name) throws Exception {
 		assertEquals(expectedPersonOutput, isEmployee);
 	}
 	
-	void testEmployeeNotTrue(String name) {
+	void testEmployeeNotTrue(String name) throws Exception {
 		assertEquals(expectedPersonOutput, isNotEmployee);
 	}
 	
