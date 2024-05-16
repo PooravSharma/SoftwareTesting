@@ -6,7 +6,6 @@ import au.edu.sccs.csp3105.NBookingPlanner.Planner;
 import static org.junit.jupiter.api.Assertions.*;
 
 //THe JUnit5 Libraries required 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +22,7 @@ public class BlackBoxStartHourInput {
 	
 	
 	@Test
+	@DisplayName("Test case: ")
 	void testValidStartTime() {
 		
 		assertEquals(0, 0, isValidStart);
