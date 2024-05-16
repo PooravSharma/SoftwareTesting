@@ -71,7 +71,6 @@ public class BlackBoxOrganization {
 	String isEmployee = "This person is an employee"; 
 	String isNotEmployee = "This person is NOT an employee"; 
 	
-	String output; 
 	
 	
 	/*
@@ -79,21 +78,37 @@ public class BlackBoxOrganization {
 	 *  Exceptions are there for if the room does not exist
 	 */
 	@Test
-	void testRoomTrue(String ID) throws Exception {
-		for (room : rooms)
-		assertEquals(rooms, isRoom);
+	public void TestRoom(String ID) {
+		Room output = null;
+		for (Room tocheck : rooms) {
+			if(tocheck.getID().equals(ID)) {
+				output = tocheck;
+				assertEquals(rooms, isRoom);
+			}
+		}
+		
 	}
 	
-	void testRoomNotTrue(String ID) throws Exception {
-		 assertEquals(output, isNotRoom);
+	public void testRoomNotTrue(String ID) {
+		Room output = null;
+		for (Room tocheck : rooms) {
+			if(tocheck.getID().equals(ID)) {
+				output = tocheck;
+				assertEquals(output, isNotRoom);
+			}
+		}
 	}
 
 	//continuing this, each employee
-	void testEmployeeTrue(String name) throws Exception {
+	public void testEmployeeTrue(String name) {
+		Person output = null;
+		
 		assertEquals(output, isEmployee);
 	}
 	
-	void testEmployeeNotTrue(String name) throws Exception {
+	public void testEmployeeNotTrue(String name) {
+		Person output = null;
+		
 		assertEquals(output, isNotEmployee);
 	}
 	
