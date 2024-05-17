@@ -1,6 +1,5 @@
 package tests;
 import static com.github.stefanbirkner.systemlambda.SystemLambda.withTextFromSystemIn;
-import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.jupiter.api.AfterEach;
@@ -14,7 +13,8 @@ import com.github.stefanbirkner.systemlambda.SystemLambda;
 
 import au.edu.sccs.csp3105.NBookingPlanner.Planner;
 
-public class Month_Blackbox {
+
+public class Day_Blackbox {
 
 	// save out the console output to a stream, rather than printing to the actual console window
 	private final ByteArrayOutputStream out = new ByteArrayOutputStream(); // data can be written to this byte array
@@ -43,12 +43,11 @@ public class Month_Blackbox {
 	public void restoreInitialStreams() {
 		System.setOut(originalOut); // reset
 	}
-	
-	
-	// ID: M_BB_1
+   
+    // ID: BB_DAY_1
 	@Test
-	@DisplayName("BB valid Numeric Month")
-	void BB_ValidMonth() throws Exception {   
+	@DisplayName("BB valid Day")
+	void BB_ValidDay() throws Exception {   
 		// make spy, we can use some of the real methods and mock some of the other methods
 		planner = Mockito.spy(Planner.class);
 
@@ -57,14 +56,13 @@ public class Month_Blackbox {
 
 		//set inputs as per table
 		int month = 10;
-		int day = 1;
+		int day = 5;
 		int start = 11;
 		int end = 12;
 		String roomIn = "JO15.236";
 		String personIn = "Justin Gardener";
 		String complete = "done";
 		String description = "Desc";
-
 
 		//buffer input values, console will call these one by one! Thanks system lambda library
 		withTextFromSystemIn(Integer.toString(month),
@@ -81,31 +79,26 @@ public class Month_Blackbox {
 				});
 			
 			//assert what we expect to be printed to console, is what is actually observed
-			Assertions.assertEquals("Enter a description for the meeting:", GetLastConsoleOutput(out.toString()));		
+		Assertions.assertEquals("Enter a description for the meeting:", GetLastConsoleOutput(out.toString()));		
 		}
 	
-	// ID: M_BB_2
+	// ID: BB_DAY_2
 	@Test
-	@DisplayName("BB Invalid Numeric Month")
-	void BB_InvalidNumericMonth() throws Exception {   
-		
+	@DisplayName("BB Invalid 29 of Feb")
+	void BB_InvalidDayFebruary() throws Exception {   
+
 		planner = Mockito.spy(Planner.class);
-
-		//override main menu with do nothing
 		Mockito.doNothing().when(planner).mainMenu();
-
-		//set inputs as per table
-		int month = 15;
-		int day = 1;
+		
+		int month = 2;
+		int day = 29;
 		int start = 11;
 		int end = 12;
-		String roomIn = "ML18.330";
-		String personIn = "Mark Colin";
+		String roomIn = "JO15.236";
+		String personIn = "Justin Gardener";
 		String complete = "done";
 		String description = "Desc";
 
-
-		
 		withTextFromSystemIn(Integer.toString(month),
 				Integer.toString(day),
 				Integer.toString(start),
@@ -119,23 +112,19 @@ public class Month_Blackbox {
 					planner.scheduleMeeting();
 				});
 
-		//assert what we expect to be printed to console, is what is actually observed
-		Assertions.assertEquals("Month does not exist.", GetLastConsoleOutput(out.toString()));	
-	}
-	
-	// ID: M_BB_3
-	@Test
-	@DisplayName("BB Invalid Non-Numeric Month")
-	void BB_InvalidNonNumericMonth() throws Exception {   
+		Assertions.assertEquals("Enter a description for the meeting:", GetLastConsoleOutput(out.toString()));		
+		}
 		
+	// ID: BB_DAY_3
+	@Test
+	@DisplayName("Enter a alphabetic chracter")
+    void BB_InvalidDay() throws Exception {
+      
         planner = Mockito.spy(Planner.class);
-
-        // Override the main menu method to do nothing
         Mockito.doNothing().when(planner).mainMenu();
-
-        // Set inputs as per table
-        String month = "a";
-        int day = 1;  
+        
+        int month = 10;
+        String day = "a";  // Invalid input for day
         int start = 11;
         int end = 12;
         String roomIn = "JO15.236";
@@ -148,8 +137,8 @@ public class Month_Blackbox {
             SystemLambda.tapSystemOut(() -> {
            
                 SystemLambda.withTextFromSystemIn(
-                        month,
-                        Integer.toString(day),
+                        Integer.toString(month),
+                        day,
                         Integer.toString(start),
                         Integer.toString(end),
                         roomIn,
@@ -158,84 +147,63 @@ public class Month_Blackbox {
                         description,
                         "cancel"
                 ).execute(() -> {
-                   
+                    // Call the schedule meeting method
                     planner.scheduleMeeting();
                 });
             });
         });
 
-    
         String expected = "For input string: \"a\"";
         String actual = exception.getMessage();
         Assertions.assertTrue(actual.contains(expected));
-	}
+    }
 	
-	// ID: M_BB_4
+	// ID: BB_DAY_8
 	@Test
-	@DisplayName("BB Invalid White space for Month")
-	void BB_InvalidWhiteSpaceMonth() throws Exception {   
-		 planner = Mockito.spy(Planner.class);
-
-	        Mockito.doNothing().when(planner).mainMenu();
-
-	        String month = "";
-	        int day = 1;  
-	        int start = 11;
-	        int end = 12;
-	        String roomIn = "JO15.236";
-	        String personIn = "Justin Gardener";
-	        String complete = "done";
-	        String description = "Desc";
-
-	      
-	        Exception exception = Assertions.assertThrows(NumberFormatException.class, () -> {
-	            SystemLambda.tapSystemOut(() -> {
-	           
-	                SystemLambda.withTextFromSystemIn(
-	                        month,
-	                        Integer.toString(day),
-	                        Integer.toString(start),
-	                        Integer.toString(end),
-	                        roomIn,
-	                        personIn,
-	                        complete,
-	                        description,
-	                        "cancel"
-	                ).execute(() -> {
-	                    // Call the schedule meeting method
-	                    planner.scheduleMeeting();
-	                });
-	            });
-	        });
-
-	        // Optionally check the exception message if needed
-	        String expected = "For input string: \"\"";
-	        String actual = exception.getMessage();
-	        Assertions.assertTrue(actual.contains(expected));
-	}
+	@DisplayName("End the vacation date before the start date")
+    void BB_InValidBookVacation() throws Exception {
 	
-		// Boundary Analysis
-		
-	// ID: M_BB_5
-	@Test
-	@DisplayName("BB  our side of low boundary for Month start from 0")
-	void BB_OutsideLowBoundaryMonth() throws Exception {   
-		
 		planner = Mockito.spy(Planner.class);
-
-		//override main menu with do nothing
 		Mockito.doNothing().when(planner).mainMenu();
 
-		//set inputs as per table
-		int month = 0;
-		int day = 1;
+		int smonth = 4;
+		int sday = 1; 
+		int emonth = 3;
+		int eday = 11;
+		String personIn = "Justin Gardener";
+	
+		withTextFromSystemIn(Integer.toString(smonth),
+				Integer.toString(sday),
+				Integer.toString(emonth),
+				Integer.toString(eday), 
+				personIn
+				).execute(() -> {
+					//call the schedule meeting method
+					planner.scheduleVacation();
+				});
+			
+			Assertions.assertEquals("Day does not exist.", GetLastConsoleOutput(out.toString()));		
+			}
+
+	
+//  Boundary Analysis Schedule Meeting
+		
+	// ID: BB_DAY_4
+	@Test
+	@DisplayName("BB  out side of low boundary for Day start from 0")
+	void BB_OutsideLowBoundaryDay() throws Exception {   
+		planner = Mockito.spy(Planner.class);
+		Mockito.doNothing().when(planner).mainMenu();
+
+		int month = 10;
+		int day = 0;
 		int start = 11;
 		int end = 12;
 		String roomIn = "JO15.236";
 		String personIn = "Mark Colin";
 		String complete = "done";
 		String description = "Desc";
-
+	
 		withTextFromSystemIn(Integer.toString(month),
 				Integer.toString(day),
 				Integer.toString(start),
@@ -245,23 +213,20 @@ public class Month_Blackbox {
 				complete, 
 				description,
 				"cancel").execute(() -> {
-					//call the schedule meeting method
-					planner.scheduleMeeting();
+				planner.scheduleMeeting();
 				});
-			
-		//assert what we expect to be printed to console, is what is actually observed
-		Assertions.assertEquals("Month does not exist.", GetLastConsoleOutput(out.toString()));	
+		
+		Assertions.assertEquals("Day does not exist.", GetLastConsoleOutput(out.toString()));	
 		}
 	
-	// ID: M_BB_6	
+	// ID: BB_DAY_5
 	@Test
-	@DisplayName("BB  lower Boundary for Month start from 1")
-	void BB_LowerBoundaryMonth() throws Exception {   
-	
+	@DisplayName("BB  lower Boundary for Day start from 1")
+	void BB_LowerBoundaryDay() throws Exception {   
+		// make spy, we can use some of the real methods and mock some of the other methods
 		planner = Mockito.spy(Planner.class);
 		Mockito.doNothing().when(planner).mainMenu();
 
-		
 		int month = 1;
 		int day = 1;
 		int start = 11;
@@ -270,7 +235,7 @@ public class Month_Blackbox {
 		String personIn = "Mark Colin";
 		String complete = "done";
 		String description = "Desc";
-
+	
 		withTextFromSystemIn(Integer.toString(month),
 				Integer.toString(day),
 				Integer.toString(start),
@@ -284,28 +249,26 @@ public class Month_Blackbox {
 				planner.scheduleMeeting();
 				});
 			
-			//assert what we expect to be printed to console, is what is actually observed
-			Assertions.assertEquals("Enter a description for the meeting:", GetLastConsoleOutput(out.toString()));	
+		Assertions.assertEquals("Enter a description for the meeting:", GetLastConsoleOutput(out.toString()));	
 		}
 	
-	// ID: M_BB_7	
-	@Test
-	@DisplayName("BB upper Boundary for Month")
-	void BB_UpperBoundaryMonth() throws Exception {   
-
+	// ID: BB_DAY_6
+    @Test
+	@DisplayName("BB upper Boundary for Day")
+	void BB_UpperBoundaryDay() throws Exception {   
+		// make spy, we can use some of the real methods and mock some of the other methods
 		planner = Mockito.spy(Planner.class);
 		Mockito.doNothing().when(planner).mainMenu();
 
-
-		int month = 12;
-		int day = 1;
+		int month = 11;
+		int day = 31;
 		int start = 11;
 		int end = 12;
 		String roomIn = "JO15.236";
 		String personIn = "Mark Colin";
 		String complete = "done";
 		String description = "Desc";
-
+	
 		withTextFromSystemIn(Integer.toString(month),
 				Integer.toString(day),
 				Integer.toString(start),
@@ -319,20 +282,19 @@ public class Month_Blackbox {
 					planner.scheduleMeeting();
 				});
 			
-	
-		Assertions.assertEquals("Month does not exist.", GetLastConsoleOutput(out.toString()));	
+		Assertions.assertEquals("Enter a description for the meeting:", GetLastConsoleOutput(out.toString()));	
 		}
-	
-	// ID: M_BB_8
+    
+ // ID: BB_DAY_7
 	@Test
-	@DisplayName("BB above the upper boundary for Month")
-	void BB_AboveUppBoundaryMonth() throws Exception {   
+	@DisplayName("BB above the upper boundary day in schedule meeting")
+	void BB_AboveUppBoundaryDay() throws Exception {   
+		
 		planner = Mockito.spy(Planner.class);
 		Mockito.doNothing().when(planner).mainMenu();
 
-		
-		int month = 13;
-		int day = 1;
+		int month = 11;
+		int day = 32;
 		int start = 11;
 		int end = 12;
 		String roomIn = "JO15.236";
@@ -352,9 +314,125 @@ public class Month_Blackbox {
 					//call the schedule meeting method
 					planner.scheduleMeeting();
 				});
-
 	
-		Assertions.assertEquals("Month does not exist.", GetLastConsoleOutput(out.toString()));	
+		Assertions.assertEquals("Day does not exist.", GetLastConsoleOutput(out.toString()));	
 	}
 	
+	
+//		Boundary Analysis Schedule Vacation
+	
+	// ID: BB_DAY_9
+	@Test
+	@DisplayName("BB  out side of low boundary for Day start from 0 in vacation")
+	void BBVacation_OutsideLowBoundaryDay() throws Exception {
+
+		planner = Mockito.spy(Planner.class);
+		Mockito.doNothing().when(planner).mainMenu();
+
+		int smonth = 4;
+		int sday = 0; 
+		int emonth = 5;
+		int eday = 11;
+		String personIn = "Justin Gardener";
+
+		withTextFromSystemIn(Integer.toString(smonth),
+				Integer.toString(sday),
+				Integer.toString(emonth),
+				Integer.toString(eday), 
+				personIn
+				).execute(() -> {
+					//call the schedule meeting method
+					planner.scheduleVacation();
+				});
+
+			Assertions.assertEquals("Day does not exist.", GetLastConsoleOutput(out.toString()));				
 }
+
+	// ID: BB_DAY_10
+	@Test
+	@DisplayName("BB  lower Boundary for Day start from 1 in vacation")
+	void BBVacationLowBoundaryDay() throws Exception {
+		
+		planner = Mockito.spy(Planner.class);
+	
+		//override main menu with do nothing
+		Mockito.doNothing().when(planner).mainMenu();
+	
+		//set inputs as per table
+		int smonth = 4;
+		int sday = 1; 
+		int emonth = 5;
+		int eday = 11;
+		String personIn = "Justin Gardener";
+	
+		withTextFromSystemIn(Integer.toString(smonth),
+				Integer.toString(sday),
+				Integer.toString(emonth),
+				Integer.toString(eday), 
+				personIn
+				).execute(() -> {
+					//call the schedule meeting method
+					planner.scheduleVacation();
+				});
+			
+			Assertions.assertEquals("Enter a person's name, or cancel to cancel the request", GetLastConsoleOutput(out.toString()));
+		}
+	
+	// ID: BB_DAY_11
+	@Test
+	@DisplayName("BB upper Boundary for Day in vacation")
+	void BBVacationUpBoundaryDay() throws Exception {   
+		planner = Mockito.spy(Planner.class);
+	
+		Mockito.doNothing().when(planner).mainMenu();
+	
+		int smonth = 7;
+		int sday = 31; 
+		int emonth = 8;
+		int eday = 11;
+		String personIn = "Justin Gardener";
+	
+		withTextFromSystemIn(Integer.toString(smonth),
+				Integer.toString(sday),
+				Integer.toString(emonth),
+				Integer.toString(eday), 
+				personIn
+				).execute(() -> {
+				
+					planner.scheduleVacation();
+				});
+			
+			Assertions.assertEquals("Enter a person's name, or cancel to cancel the request", GetLastConsoleOutput(out.toString()));
+		}	
+	
+	// ID: BB_DAY_12
+	@Test
+	@DisplayName("BB above the upper boundary for day in vacation")
+	void BBVacation_AboveUppBoundaryDay() throws Exception {   
+		
+		planner = Mockito.spy(Planner.class);
+		Mockito.doNothing().when(planner).mainMenu();
+	
+		int smonth = 4;
+		int sday = 32; 
+		int emonth = 5;
+		int eday = 11;
+		String personIn = "Justin Gardener";
+	
+		withTextFromSystemIn(Integer.toString(smonth),
+				Integer.toString(sday),
+				Integer.toString(emonth),
+				Integer.toString(eday), 
+				personIn
+				).execute(() -> {
+					
+					planner.scheduleVacation();
+				});
+			
+			Assertions.assertEquals("Day doe not exist", GetLastConsoleOutput(out.toString()));
+			
+	}
+
+}
+
+

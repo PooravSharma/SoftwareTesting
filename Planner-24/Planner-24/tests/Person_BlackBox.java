@@ -41,6 +41,7 @@ public class Person_BlackBox {
 		System.setOut(originalOut); // reset
 	}
 	
+    // ID: P_BB_1
 	@Test
 	@DisplayName("BB Valid person from the list")
 	void BB_ValidPerson() throws Exception {   
@@ -80,20 +81,19 @@ public class Person_BlackBox {
 			Assertions.assertEquals("Enter a description for the meeting:", GetLastConsoleOutput(out.toString()));		
 		}
 	
+	
+	// ID: P_BB_2
 	@Test
 	@DisplayName("BB Entering Cancel in Check Person Agenda")
 	void BB_CheckCancelOption() throws Exception {   
-		// make spy, we can use some of the real methods and mock some of the other methods
+		
 		planner = Mockito.spy(Planner.class);
-
-		//override main menu with do nothing
 		Mockito.doNothing().when(planner).mainMenu();
 
-		//set inputs as per table
 		int month = 10;
 		int day = 1;
 
-		//buffer input values, console will call these one by one! Thanks system lambda library
+	
 		withTextFromSystemIn(Integer.toString(month),
 				Integer.toString(day),
 				"cancel"
@@ -107,16 +107,16 @@ public class Person_BlackBox {
 		Assertions.assertTrue(out.toString().contains(" "));
 		}
 	
+	
+	// ID: P_BB_3
 	@Test
 	@DisplayName("BB inserting another person name which is not in the suggested names")
 	void BB_InValidPerson() throws Exception {   
-		// make spy, we can use some of the real methods and mock some of the other methods
+	
 		planner = Mockito.spy(Planner.class);
-
-		//override main menu with do nothing
 		Mockito.doNothing().when(planner).mainMenu();
 
-		//set inputs as per table
+	
 		int month = 10;
 		int day = 1;
 		int start = 11;
@@ -126,8 +126,6 @@ public class Person_BlackBox {
 		String complete = "done";
 		String description = "Desc";
 
-
-		//buffer input values, console will call these one by one! Thanks system lambda library
 		withTextFromSystemIn(Integer.toString(month),
 				Integer.toString(day),
 				Integer.toString(start),
@@ -140,30 +138,23 @@ public class Person_BlackBox {
 					//call the schedule meeting method
 					planner.scheduleMeeting();
 				});
-			
-			//assert what we expect to be printed to console, is what is actually observed
-//			Assertions.assertEquals("Enter a description for the meeting:", GetLastConsoleOutput(out.toString()));
+
 			Assertions.assertTrue(out.toString().contains("Requested employee does not exist"));
 
 		}
 	
+	// ID: P_BB_4
 	@Test
 	@DisplayName("BB inserting another person name which is not in the suggested names in checking agenda")
 	void BB_InValidPersonCheckAgenda() throws Exception {   
-		// make spy, we can use some of the real methods and mock some of the other methods
 		planner = Mockito.spy(Planner.class);
-
-		//override main menu with do nothing
 		Mockito.doNothing().when(planner).mainMenu();
 
-		//set inputs as per table
 		int month = 10;
 		int day = 1;
 	
 		String personIn = "Ahmad Sharifi";
 
-
-		//buffer input values, console will call these one by one! Thanks system lambda library
 		withTextFromSystemIn(Integer.toString(month),
 				Integer.toString(day),
 				Integer.toString(day),
@@ -172,21 +163,18 @@ public class Person_BlackBox {
 					//call the schedule meeting method
 					planner.checkAgendaPerson();
 				});
-			
-			//assert what we expect to be printed to console, is what is actually observed
+	
 			Assertions.assertEquals("Requested employee does not exist", GetLastConsoleOutput(out.toString()));		
 		}
 	
+	// ID: P_BB_5
 	@Test
 	@DisplayName("BB inserting a name with lower case starting from both first and lastname")
 	void BB_PersonCaseSensitivity() throws Exception {   
-		// make spy, we can use some of the real methods and mock some of the other methods
 		planner = Mockito.spy(Planner.class);
 
-		//override main menu with do nothing
 		Mockito.doNothing().when(planner).mainMenu();
 
-		//set inputs as per table
 		int month = 10;
 		int day = 1;
 		int start = 11;
@@ -195,9 +183,7 @@ public class Person_BlackBox {
 		String personIn = "ashley matthews";
 		String complete = "done";
 		String description = "Desc";
-
-
-		//buffer input values, console will call these one by one! Thanks system lambda library
+		
 		withTextFromSystemIn(Integer.toString(month),
 				Integer.toString(day),
 				Integer.toString(start),
@@ -211,20 +197,18 @@ public class Person_BlackBox {
 					planner.scheduleMeeting();
 				});
 			
-			//assert what we expect to be printed to console, is what is actually observed
 			Assertions.assertEquals("Enter a description for the meeting:", GetLastConsoleOutput(out.toString()));		
 		}
 	
+	// ID: P_BB_6
 	@Test
 	@DisplayName("BB inserting empty string")
 	void BB_PersonEmptyString() throws Exception {   
-		// make spy, we can use some of the real methods and mock some of the other methods
-		planner = Mockito.spy(Planner.class);
 
-		//override main menu with do nothing
+		planner = Mockito.spy(Planner.class);
 		Mockito.doNothing().when(planner).mainMenu();
 
-		//set inputs as per table
+	
 		int month = 10;
 		int day = 1;
 		int start = 11;
@@ -234,8 +218,6 @@ public class Person_BlackBox {
 		String complete = "done";
 		String description = "Desc";
 
-
-		//buffer input values, console will call these one by one! Thanks system lambda library
 		withTextFromSystemIn(Integer.toString(month),
 				Integer.toString(day),
 				Integer.toString(start),
@@ -245,24 +227,23 @@ public class Person_BlackBox {
 			    complete, 
 			    description,
 				"cancel").execute(() -> {
-					//call the schedule meeting method
+				
 					planner.scheduleMeeting();
 				});
-			
-			//assert what we expect to be printed to console, is what is actually observed
+
 			Assertions.assertEquals("Enter a description for the meeting:", GetLastConsoleOutput(out.toString()));		
 		}
 	
+	// ID: P_BB_7
 	@Test
 	@DisplayName("BB inserting extra white space between name and surname")
 	void BB_PersonExtraWhiteSpace() throws Exception {   
-		// make spy, we can use some of the real methods and mock some of the other methods
+	
 		planner = Mockito.spy(Planner.class);
 
-		//override main menu with do nothing
 		Mockito.doNothing().when(planner).mainMenu();
 
-		//set inputs as per table
+
 		int month = 10;
 		int day = 1;
 		int start = 11;
@@ -272,8 +253,6 @@ public class Person_BlackBox {
 		String complete = "done";
 		String description = "Desc";
 
-
-		//buffer input values, console will call these one by one! Thanks system lambda library
 		withTextFromSystemIn(Integer.toString(month),
 				Integer.toString(day),
 				Integer.toString(start),
@@ -283,11 +262,11 @@ public class Person_BlackBox {
 			    complete, 
 			    description,
 				"cancel").execute(() -> {
-					//call the schedule meeting method
+				
 					planner.scheduleMeeting();
 				});
 			
-			//assert what we expect to be printed to console, is what is actually observed
+
 			Assertions.assertEquals("Enter a description for the meeting:", GetLastConsoleOutput(out.toString()));		
 		}
 	
