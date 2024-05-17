@@ -151,7 +151,7 @@ class MeetingClass_UnitTest {
 	void meetGSMonth() {
 		meeting = new Meeting(month, day);
 		meeting.setMonth(6);
-		assertEquals(6, meeting.getMonth());
+		Assertions.assertEquals(6, meeting.getMonth());
 	}
 
 	// TestID MeetGS3 & MeetGS4
@@ -160,7 +160,7 @@ class MeetingClass_UnitTest {
 	void meetGSDay() {
 		meeting = new Meeting(month, day);
 		meeting.setDay(12);
-		assertEquals(12, meeting.getDay());
+		Assertions.assertEquals(12, meeting.getDay());
 	}
 
 	// TestID MeetGS5 & MeetGS6
@@ -169,7 +169,7 @@ class MeetingClass_UnitTest {
 	public void meetGSStartTime() {
 		meeting = new Meeting(month, day, start, end);
 		meeting.setStartTime(5);
-		assertEquals(5, meeting.getStartTime());
+		Assertions.assertEquals(5, meeting.getStartTime());
 	}
 
 	// TestID MeetGS7 & MeetGS8
@@ -178,20 +178,19 @@ class MeetingClass_UnitTest {
 	void meetGSSEndTime() {
 		meeting = new Meeting(month, day, start, end);
 		meeting.setEndTime(20);
-		assertEquals(20, meeting.getEndTime());
+		Assertions.assertEquals(20, meeting.getEndTime());
 	}
-	
+
 	// TestID MeetGS9
-		@Test
-		@DisplayName("Getting Attendees (TestID:MeetGS9)")
-		void meetGSAttendees() {
-			meeting = new Meeting(month, day, start, end, attendees, room, description);
-			Person person = new Person("Harold");
-			meeting.addAttendee(person);
-			
-			assertEquals(attendees, meeting.getAttendees());
-		}
-	
+	@Test
+	@DisplayName("Getting Attendees (TestID:MeetGS9)")
+	void meetGSAttendees() {
+		meeting = new Meeting(month, day, start, end, attendees, room, description);
+		Person person = new Person("Harold");
+		meeting.addAttendee(person);
+
+		Assertions.assertEquals(attendees, meeting.getAttendees());
+	}
 
 	// TestID MeetGS10 & MeetGS11
 	@Test
@@ -200,16 +199,16 @@ class MeetingClass_UnitTest {
 		meeting = new Meeting(month, day);
 		Room newRoom = new Room("JO18.330");
 		meeting.setRoom(newRoom);
-		assertEquals(newRoom, meeting.getRoom());
+		Assertions.assertEquals(newRoom, meeting.getRoom());
 	}
 
 	// TestID MeetGS12 & MeetGS13
 	@Test
 	@DisplayName("Setting and getting Description (TestID:MeetGS12 & MeetGS13)")
 	void meetGSDescription() {
-		meeting = new Meeting(11, 7);
+		meeting = new Meeting(month, day);
 		meeting.setDescription("New Description");
-		assertEquals("New Description", meeting.getDescription());
+		Assertions.assertEquals("New Description", meeting.getDescription());
 	}
 
 }
