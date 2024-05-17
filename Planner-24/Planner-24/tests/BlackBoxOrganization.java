@@ -7,7 +7,6 @@ import au.edu.sccs.csp3105.NBookingPlanner.Room;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import java.util.Arrays;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.mockito.Mockito;
@@ -80,14 +79,15 @@ public class BlackBoxOrganization {
 	@Test
 	@DisplayName("BB_org_0 valid room")
 	public void TestRoom(String ID) throws Exception {
-		
+		//Create a spy of the Organization class using Mockito to monitor interactions
 		Organization organization = Mockito.spy(Organization.class);
-
-		Room output = null;
-		for (Room tocheck : rooms) {
+		
+		Room[] actualoutput = new Room [] {"JO18.330"};
+		
+		for (Room[] tocheck : rooms) {
 			if(tocheck.getID().equals(ID)) {
-				output = tocheck;
-				assertEquals(output, rooms);
+				actualoutput = tocheck;
+				assertEquals(rooms, actualoutput);
 			}
 		}
 		
@@ -99,11 +99,11 @@ public class BlackBoxOrganization {
 		
 		Organization organization = Mockito.spy(Organization.class);
 
-		Room output = null;
+		Room actualoutput = null;
 		for (Room tocheck : rooms) {
 			if(tocheck.getID().equals(ID)) {
-				output = tocheck;
-				assertEquals(output, rooms);
+				actualoutput = tocheck;
+				assertEquals(rooms, actualoutput);
 			}
 		}
 	}
@@ -116,9 +116,9 @@ public class BlackBoxOrganization {
 		
 		Organization organization = Mockito.spy(Organization.class);
 
-		Person output = null;
+		Person actualoutput = null;
 		
-		assertEquals(output, employees);
+		assertEquals(employees, actualoutput);
 	}
 	
 	@Test
@@ -127,9 +127,9 @@ public class BlackBoxOrganization {
 		
 		Organization organization = Mockito.spy(Organization.class);
 
-		Person output = null;
+		Person actualoutput = null;
 		
-		assertEquals(output, employees);
+		assertEquals(employees, actualoutput);
 	}
 	
 	
