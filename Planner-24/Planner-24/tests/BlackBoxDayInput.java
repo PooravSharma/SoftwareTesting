@@ -5,6 +5,7 @@ import au.edu.sccs.csp3105.NBookingPlanner.Planner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.DisplayName;
 //The test only requires JUnit5 Libraries 
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +25,7 @@ public class BlackBoxDayInput {
 	
 	
 	@Test
+	@DisplayName("Day_validDay")
 	void testValidDay() {
 		assertEquals(1, 1, isValid);
 		assertEquals(2, 2, isValid);
@@ -38,18 +40,22 @@ public class BlackBoxDayInput {
 
 	// We account for the 29th day because February has 29 days and because of Leap Years
 	@Test	
+	@DisplayName("Day_invalidDay")
 	void testInvalidDay() {
 
 		assertEquals( -1, -1, isNotValid);
 		assertEquals("0", "0", isNotValid);
 		assertEquals( 0, 0, isNotValid);
-		assertEquals( 29, 29, isNotValid);
-		assertEquals( 32, 32, isNotValid);
+		assertEquals( 30, 29, isNotValid); // do a test for the leap year
+		assertEquals( 31, 31, isNotValid); 
+		assertEquals( 32, 32, isNotValid); 
 		assertEquals( 33, 33, isNotValid);		
 
 	}
 	
-	// The days aabove or below the boundaries are tested
+	// The days above or below the boundaries are tested
+	@Test
+	@DisplayName("Day_OverDayBoundary")
 	void testOverDayBoundary() {
 
 		assertEquals(0, 0, overBoundary);

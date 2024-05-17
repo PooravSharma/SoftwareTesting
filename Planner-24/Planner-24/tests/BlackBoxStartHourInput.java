@@ -22,7 +22,7 @@ public class BlackBoxStartHourInput {
 	
 	
 	@Test
-	@DisplayName("Test case: ")
+	@DisplayName("SM_validStartTime")
 	void testValidStartTime() {
 		
 		assertEquals(0, 0, isValidStart);
@@ -52,11 +52,12 @@ public class BlackBoxStartHourInput {
 	}
 	
 	@Test
+	@DisplayName("SM_invalidStartTime")
 	void testInvalidStartTime() {
 		
 		assertEquals("zero", "zero", isNotValidStart);
 		assertEquals(-1, -1, isNotValidStart);
-		assertEquals(23, 23, isValidStart);
+		assertEquals(23, 23, isNotValidStart);
 		assertEquals(24, 24, isNotValidStart);
 		assertEquals("one", "one", isNotValidStart);
 
@@ -64,6 +65,7 @@ public class BlackBoxStartHourInput {
 	}
 	
 	@Test
+	@DisplayName("SM_OverStartBoundary")
 	void testOverStartBoundary() {
 		
 		assertEquals(-1, -1, overBoundary);
