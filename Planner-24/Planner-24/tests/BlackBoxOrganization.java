@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.mockito.Mockito;
 
+//Create a Organization class constructor to initialise and store a mockup of data from the file
+
 public class BlackBoxOrganization {
 
-	//Create a spy of the Organization class to initialise and store a mockup of data from the file
-	Organization planner = Mockito.spy(Organization.class);
 
 	private ArrayList<Person> employees;
 	private ArrayList<Room> rooms;
 	
 	public void Organization(){
-	//Create an array of strings with the names of employees
+	//Create an array of strings with the names of employees. these strings will be the expected input asnd output
 	employees = new ArrayList<Person>();
 	employees.add(new Person("Justin Gardener"));
 	employees.add(new Person("Ashley Matthews"));
@@ -78,38 +78,58 @@ public class BlackBoxOrganization {
 	 *  Exceptions are there for if the room does not exist
 	 */
 	@Test
-	public void TestRoom(String ID) {
+	@DisplayName("BB_org_0 valid room")
+	public void TestRoom(String ID) throws Exception {
+		
+		Organization organization = Mockito.spy(Organization.class);
+
 		Room output = null;
 		for (Room tocheck : rooms) {
 			if(tocheck.getID().equals(ID)) {
 				output = tocheck;
-				assertEquals(rooms, isRoom);
+				assertEquals(output, rooms);
 			}
 		}
 		
 	}
 	
-	public void testRoomNotTrue(String ID) {
+	@Test
+	@DisplayName("BB_org_1 invalid room")
+	public void testRoomNotTrue(String ID) throws Exception {
+		
+		Organization organization = Mockito.spy(Organization.class);
+
 		Room output = null;
 		for (Room tocheck : rooms) {
 			if(tocheck.getID().equals(ID)) {
 				output = tocheck;
-				assertEquals(output, isNotRoom);
+				assertEquals(output, rooms);
 			}
 		}
 	}
 
 	//continuing this, each employee
-	public void testEmployeeTrue(String name) {
+	
+	@Test
+	@DisplayName("BB_org_2 valid employee")
+	public void testEmployeeTrue(String name) throws Exception {
+		
+		Organization organization = Mockito.spy(Organization.class);
+
 		Person output = null;
 		
-		assertEquals(output, isEmployee);
+		assertEquals(output, employees);
 	}
 	
-	public void testEmployeeNotTrue(String name) {
+	@Test
+	@DisplayName("BB_org_3 invalid employee")
+	public void testEmployeeNotTrue(String name) throws Exception {
+		
+		Organization organization = Mockito.spy(Organization.class);
+
 		Person output = null;
 		
-		assertEquals(output, isNotEmployee);
+		assertEquals(output, employees);
 	}
 	
 	
